@@ -56,7 +56,8 @@
 
 
 
-#
+# INSTALL CAFFE
+# 
 # https://github.com/BVLC/caffe/blob/master/docker/standalone/gpu/Dockerfile
 #
 # FROM nvidia/cuda:7.5-cudnn5-devel-ubuntu14.04
@@ -65,10 +66,13 @@ MAINTAINER caffe-maint@googlegroups.com
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
+        software-properties-common \
+        gcc \
         cmake \
         git \
         wget \
         vim \
+        graphviz \
         libatlas-base-dev \
         libboost-all-dev \
         libgflags-dev \
@@ -83,7 +87,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python-dev \
         python-numpy \
         python-pip \
-        python-scipy && \
+        python-scipy \
+        libhdf5-dev && \
     rm -rf /var/lib/apt/lists/*
 
 ENV CAFFE_ROOT=/opt/caffe
@@ -114,12 +119,6 @@ WORKDIR /workspace
 ENV DIGITS_VERSION 4.0
 LABEL com.nvidia.digits.version="4.0"
 
-RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
-            software-properties-common \
-            graphviz \
-            gcc \
-            libhdf5-dev && \
-    rm -rf /var/lib/apt/lists/*
 
 # https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildTorch.md
 # example location - can be customized
