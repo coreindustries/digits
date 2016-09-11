@@ -114,15 +114,31 @@ WORKDIR /workspace
 ENV DIGITS_VERSION 4.0
 LABEL com.nvidia.digits.version="4.0"
 
-# workaround: gcc and libhdf5-dev are dependencies that are currently missing from the torch package
-ENV DIGITS_PKG_VERSION 4.0.0-1
 RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
-            torch7-nv=0.9.99-1+cuda7.5 \
+            software-properties-common \
             graphviz \
             gcc \
-            libhdf5-dev \
-            digits=$DIGITS_PKG_VERSION && \
+            libhdf5-dev && \
     rm -rf /var/lib/apt/lists/*
+
+# https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildTorch.md
+# example location - can be customized
+ENV TORCH_BUILD=~/torch
+ENV TORCH_HOME=$TORCH_BUILD/install
+
+RUN git clone https://github.com/torch/distro.git $TORCH_BUILD --recursive
+RUN cd $TORCH_BUILD
+RUN ./install-deps
+RUN ./install.sh -b
+RUN source ~/.bashrc
+
+
+# https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildDigits.md
+# example location - can be customized
+DIGITS_HOME=~/digits
+RUN git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
+
+RUN sudo pip install -r $DIGITS_HOME/requirements.txt
 
 VOLUME /data
 VOLUME /jobs
