@@ -1,1 +1,1 @@
-docker build -t coreindustries/DIGITS .
+docker build -t coreindustries/digits .
