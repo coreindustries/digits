@@ -127,10 +127,10 @@ ENV TORCH_BUILD=~/torch
 ENV TORCH_HOME=$TORCH_BUILD/install
 
 RUN git clone https://github.com/torch/distro.git $TORCH_BUILD --recursive
-RUN cd $TORCH_BUILD
-RUN ./install-deps
-RUN ./install.sh -b
-RUN source ~/.bashrc
+RUN cd $TORCH_BUILD && \
+./install-deps && \
+./install.sh -b && \
+source ~/.bashrc
 
 
 # https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildDigits.md
