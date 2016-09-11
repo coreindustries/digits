@@ -102,8 +102,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python-numpy \
         python-pip \
         python-scipy \
-        libhdf5-dev && \
-    rm -rf /var/lib/apt/lists/*
+        libhdf5-dev 
 
 ENV CAFFE_ROOT=/opt/caffe
 WORKDIR $CAFFE_ROOT
@@ -161,3 +160,5 @@ COPY digits.cfg digits/digits.cfg
 EXPOSE 34448
 WORKDIR /usr/share/digits
 ENTRYPOINT ["./digits-server"]
+
+RUN rm -rf /var/lib/apt/lists/*
