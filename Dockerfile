@@ -55,12 +55,7 @@
 # ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
 
 
-# http://layer0.authentise.com/docker-4-useful-tips-you-may-not-know-about.html
-# pick a mirror for apt-get
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse" > /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" >> /etc/apt/sources.list && \
-    DEBIAN_FRONTEND=noninteractive apt-get update
+
 
 
 # INSTALL CAFFE
@@ -70,6 +65,13 @@ RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted uni
 # FROM nvidia/cuda:7.5-cudnn5-devel-ubuntu14.04
 FROM nvidia/cuda:8.0-cudnn5-runtime
 MAINTAINER caffe-maint@googlegroups.com
+
+# http://layer0.authentise.com/docker-4-useful-tips-you-may-not-know-about.html
+# pick a mirror for apt-get
+RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse" > /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
+    echo "deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe multiverse" >> /etc/apt/sources.list && \
+    DEBIAN_FRONTEND=noninteractive apt-get update
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
@@ -141,7 +143,7 @@ RUN cd $TORCH_BUILD && \
 
 # https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildDigits.md
 # example location - can be customized
-DIGITS_HOME=~/digits
+ENV DIGITS_HOME=~/digits
 RUN git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
 
 RUN sudo pip install -r $DIGITS_HOME/requirements.txt

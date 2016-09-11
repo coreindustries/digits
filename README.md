@@ -1,6 +1,6 @@
 # DIGITS 4.0 on TITAN X PASCAL
 
-I ran into trouble using the official Nvidia Digits docker build. 
+I ran into trouble using the official [Nvidia Digits docker build](https://hub.docker.com/r/nvidia/digits/) because it doesn't fully support the Pascal architecture used by the new Titan X. 
 
 So I combined information from the following sources to create this Dockerfile.
 
