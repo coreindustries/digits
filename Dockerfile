@@ -135,7 +135,7 @@ LABEL com.nvidia.digits.version="4.0"
 
 # https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildTorch.md
 # example location - can be customized
-ENV TORCH_BUILD=~/torch
+ENV TORCH_BUILD=/opt/torch
 ENV TORCH_HOME=$TORCH_BUILD/install
 
 RUN git clone https://github.com/torch/distro.git $TORCH_BUILD --recursive
@@ -147,7 +147,7 @@ RUN cd $TORCH_BUILD && \
 
 # https://github.com/NVIDIA/DIGITS/blob/master/docs/BuildDigits.md
 # example location - can be customized
-ENV DIGITS_HOME=~/digits
+ENV DIGITS_HOME=/opt/digits
 RUN git clone https://github.com/NVIDIA/DIGITS.git $DIGITS_HOME
 
 RUN sudo pip install -r $DIGITS_HOME/requirements.txt
@@ -159,6 +159,6 @@ COPY digits.cfg digits/digits.cfg
 
 EXPOSE 34448
 WORKDIR /usr/share/digits
-# ENTRYPOINT ["~/digits/digits-server"]
+ENTRYPOINT ["/opt/digits/digits-server"]
 
 RUN rm -rf /var/lib/apt/lists/*
