@@ -159,6 +159,8 @@ COPY digits.cfg digits/digits.cfg
 
 EXPOSE 34448
 WORKDIR /usr/share/digits
-ENTRYPOINT ["/opt/digits/digits-server"]
+# ENTRYPOINT ["/opt/digits/digits-server"]
 
 RUN rm -rf /var/lib/apt/lists/*
+
+# Error: 'gunicorn_config.py' doesn't exist
